@@ -31,13 +31,12 @@ class SentMemesTableViewController: UITableViewController {
         cell.memeImageView.image = meme.memedImage
         return cell
     }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let memeDetailVC = storyboard?.instantiateViewControllerWithIdentifier("memeDetailVC") as! MemeDetailViewController
-        memeDetailVC.meme = memes[indexPath.row]
-        navigationController?.pushViewController(memeDetailVC, animated: true)
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let path = tableView.indexPathForSelectedRow()!
+        let memeDetailVC = segue.destinationViewController as! MemeDetailViewController
+        memeDetailVC.meme = memes[path.row]
     }
-    
     
     @IBAction func dismissButtonTapped(sender: UIBarButtonItem) {
         dismissViewControllerAnimated(true, completion: nil)

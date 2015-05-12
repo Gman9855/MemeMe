@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
@@ -17,8 +17,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var toolbar: UIToolbar!
     
-    var memedImage: UIImage!
+    @IBOutlet weak var textFieldVerticalPositioningConstraint: NSLayoutConstraint!
     
+    var memedImage: UIImage!
     var isTopTextFieldSelected: Bool!
     
     override func viewDidLoad() {
@@ -83,8 +84,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         var activityVC = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
         activityVC.completionWithItemsHandler = { (String, Bool, [AnyObject]!, NSError) -> Void in
             self.save()
-            self.toolbar.hidden = false
-            self.navigationController?.navigationBarHidden = false
+            self.toolBarAndNavigationBarHidden(false)
         }
         presentViewController(activityVC, animated: true, completion: nil)
     }
@@ -138,25 +138,26 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         return true
     }
     
+    func toolBarAndNavigationBarHidden(hidden: Bool) {
+        toolbar.hidden = hidden
+        self.navigationController?.navigationBarHidden = hidden
+    }
+    
     func generateMemedImage() -> UIImage {
-        toolbar.hidden = true
-        self.navigationController?.navigationBarHidden = true
-        // Render view to an image
+        toolBarAndNavigationBarHidden(true)
+
         UIGraphicsBeginImageContext(self.view.frame.size)
         self.view.drawViewHierarchyInRect(self.view.frame,
             afterScreenUpdates: true)
-        let memedImage : UIImage =
-        UIGraphicsGetImageFromCurrentImageContext()
+        let memedImage : UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
         return memedImage
     }
     
     func save() {
-        //Create the meme
         var meme = Meme(topText: topTextField.text, bottomText: bottomTextField.text, image: imageView.image, memedImage: memedImage)
         
-        // Add it to the memes array in the Application Delegate
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
         appDelegate.memes.append(meme)

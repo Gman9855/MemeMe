@@ -30,10 +30,10 @@ class SentMemesCollectionViewController: UICollectionViewController {
         return cell
     }
     
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let memeDetailVC = storyboard?.instantiateViewControllerWithIdentifier("memeDetailVC") as! MemeDetailViewController
-        memeDetailVC.meme = memes[indexPath.row]
-        navigationController?.pushViewController(memeDetailVC, animated: true)
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let path = collectionView!.indexPathForCell(sender as! UICollectionViewCell)!
+        let memeDetailVC = segue.destinationViewController as! MemeDetailViewController
+        memeDetailVC.meme = memes[path.row]
     }
 
 
