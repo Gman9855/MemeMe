@@ -32,18 +32,8 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         topTextField.enabled = false
         bottomTextField.enabled = false
         
-        let memeTextAttributes = [
-            NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-            NSStrokeColorAttributeName : UIColor.blackColor(),
-            NSStrokeWidthAttributeName : -2.5,
-            NSForegroundColorAttributeName : UIColor.whiteColor(),
-        ]
-        
-        topTextField.defaultTextAttributes = memeTextAttributes;
-        bottomTextField.defaultTextAttributes = memeTextAttributes
-        
-        topTextField.textAlignment = NSTextAlignment.Center
-        bottomTextField.textAlignment = NSTextAlignment.Center
+        applyMemeTextStyleToTextField(topTextField)
+        applyMemeTextStyleToTextField(bottomTextField)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -141,6 +131,18 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     func toolBarAndNavigationBarHidden(hidden: Bool) {
         toolbar.hidden = hidden
         self.navigationController?.navigationBarHidden = hidden
+    }
+    
+    func applyMemeTextStyleToTextField(textField: UITextField) {
+        let memeTextAttributes = [
+            NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+            NSStrokeColorAttributeName : UIColor.blackColor(),
+            NSStrokeWidthAttributeName : -2.5,
+            NSForegroundColorAttributeName : UIColor.whiteColor(),
+        ]
+        
+        textField.defaultTextAttributes = memeTextAttributes;
+        textField.textAlignment = NSTextAlignment.Center
     }
     
     func generateMemedImage() -> UIImage {
