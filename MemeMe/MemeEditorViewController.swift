@@ -75,6 +75,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         activityVC.completionWithItemsHandler = { (String, Bool, [AnyObject]!, NSError) -> Void in
             self.save()
             self.toolBarAndNavigationBarHidden(false)
+            self.performSegueWithIdentifier("SentMemesSegue", sender: self)
         }
         presentViewController(activityVC, animated: true, completion: nil)
     }

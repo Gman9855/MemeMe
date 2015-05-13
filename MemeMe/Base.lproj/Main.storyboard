@@ -128,7 +128,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Cancel" id="0KR-sJ-pqI">
                             <connections>
-                                <segue destination="42k-rf-YID" kind="presentation" id="J7w-a5-7XD"/>
+                                <segue destination="42k-rf-YID" kind="presentation" identifier="SentMemesSegue" id="J7w-a5-7XD"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
